@@ -1,103 +1,126 @@
+"use client";
 import Image from "next/image";
+import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { data: session, update } = useSession();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div>
+      <div className="text-white flex flex-col justify-center items-center min-h-[40vh]">
+        <h1 className="text-4xl font-bold flex justify-center items-center gap-1">
+          Buy Me A Chai ==
+          <span className="pb-2">
+            <img src="./Tea.gif" width={60} alt="" />
+          </span>
+        </h1>
+        <p className="text-center text-xl">
+          A Crowdfunding platform for creaters. Get funded by your fans and
+          followers. Start Now!
+        </p>
+        <div className="btn flex gap-4 mt-3">
+          {session && (
+            <Link href={"/dashboard"}>
+              <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+                  Get started
+                </span>
+              </button>
+            </Link>
+          )}
+
+          {!session && (
+            <Link href={"/login"}>
+              <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+                  Start here
+                </span>
+              </button>
+            </Link>
+          )}
+
+          <Link href={"/about"}>
+            <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
+              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+                Read more
+              </span>
+            </button>
+          </Link>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      <div className="bg-white h-1 opacity-15"></div>
+
+      <div className="text-white container mx-auto pb-32 pt-14 px-10">
+        <h2 className="text-3xl font-bold text-center mb-14">
+          {" "}
+          Your Fans can buy your a Chai!
+        </h2>
+        <div className="flex gap-5 justify-around">
+          <div className="item space-y-3 flex flex-col items-center justify-center">
+            <img
+              src="./bank.gif"
+              alt=""
+              className="bg-slate-400 rounded-full p-1 text-black"
+              width={88}
+            />
+            <p className="font-bold text-center">Fund yourself</p>
+            <p className="text-center">Your Fans are available for help you</p>
+          </div>
+          <div className="item space-y-3 flex flex-col items-center justify-center">
+            <img
+              src="./coin.gif"
+              alt=""
+              className="bg-slate-400 rounded-full p-1 text-black"
+              width={88}
+            />
+            <p className="font-bold text-center">Fund yourself</p>
+            <p className="text-center">
+              you can make money selling your art, ideas and skills.
+            </p>
+          </div>
+          <div className="item space-y-3 flex flex-col items-center justify-center">
+            <img
+              src="./groups.gif"
+              alt=""
+              className="bg-slate-400 rounded-full p-1 text-black"
+              width={88}
+            />
+            <p className="font-bold text-center">Fans want to help</p>
+            <p className="text-center">you can make your own community.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white h-1 opacity-15"></div>
+
+      <div className="text-white container py-8 mx-auto">
+        <h2 className="text-2xl text-center font-bold mb-8">
+          Learn More About Us
+        </h2>
+        <div className="px-1 md:px-5 mt-5">
+          <p className="p-4 text-gray-200 text-md text-center font-sans">
+            At Get Me A Chai, we are dedicated to supporting developers,
+            creators, and influencers by connecting them with their supporters.
+            Our platform enables individuals to fund their projects and ideas,
+            providing a space where creativity and innovation can thrive.
+          </p>
+          <p className="p-4 text-gray-200 text-md text-center font-sans">
+            Our mission is to empower talented individuals by facilitating
+            financial support, allowing them to focus on what they do best –
+            creating. Whether you're a developer coding the next big app, a
+            content creator making engaging videos, or an influencer sharing
+            your passion, Get Me A Chai is here to help you achieve your goals.
+          </p>
+          <p className="p-4 text-gray-200 text-md text-center font-sans">
+            We believe in the power of community and the impact of collective
+            support. By providing a platform for patrons to contribute, we aim
+            to transform dreams into reality and foster a culture of creativity
+            and innovation.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
