@@ -15,10 +15,13 @@ export default function Home() {
             <img src="./Tea.gif" width={60} alt="" />
           </span>
         </h1>
-        <p className="text-center text-xl">
-          A Crowdfunding platform for creaters. Get funded by your fans and
-          followers. Start Now!
-        </p>
+        <div className="text-center text-xl">
+          <p>Support your favorite creators — One chai at a time.</p>
+          <p>
+            A Crowdfunding platform for creaters. Get funded by your fans and
+            followers. Start Now!
+          </p>
+        </div>
         <div className="btn flex gap-4 mt-3">
           {session && (
             <Link href={"/dashboard"}>
