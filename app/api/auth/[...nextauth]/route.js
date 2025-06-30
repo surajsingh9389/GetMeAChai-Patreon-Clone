@@ -1,40 +1,57 @@
-import NextAuth from 'next-auth'
-import GitHubProvider from "next-auth/providers/github";
+// app/api/auth/[...nextauth]/route.js
+import NextAuth from 'next-auth';
+import GitHubProvider from 'next-auth/providers/github';
 import mongoose from 'mongoose';
-import User from '@/models/User';
-import Payment from '@/models/Payment';
 import connectDB from '@/Db/connectDb';
+import User from '@/models/User';
 
-export const authoptions = NextAuth({
+export const authOptions = {
   providers: [
-    // OAuth authentication providers...
-
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET
+      clientSecret: process.env.GITHUB_SECRET,
     }),
-  ],callbacks: {
-  async signIn({ user, account, profile, email, credentials }) {
-    if(account.provider == "github"){
-         await connectDB()
+  ],
+  callbacks: {
+    async signIn({ user, account }) {
+      if (account.provider === 'github') {
+        await connectDB();
 
-         const currentUser = await User.findOne({email: email})
-         console.log(currentUser);
-         if(!currentUser){
-          const newUser = await User.create({
+        const existingUser = await User.findOne({ email: user.email });
+
+        if (!existingUser) {
+          const newUser = new User({
             email: user.email,
-            username: user.email.split("@")[0],
-          })
-        } 
-          return true
-       }
-  },async session({ session, user, token }) {
-    const dbUser = await User.findOne({email: session.user.email})
-    console.log(dbUser)
-    session.user.name = dbUser.username;
-    return session;
-  }
-}
-})
+            username: user.email.split('@')[0],
+          });
 
-export {authoptions as GET, authoptions as POST}
+          await newUser.save();
+        }
+
+        return true;
+      }
+
+      return false;
+    },
+
+    async session({ session }) {
+      await connectDB();
+
+      const dbUser = await User.findOne({ email: session.user.email });
+
+      if (dbUser) {
+        session.user.name = dbUser.username;
+      }
+
+      return session;
+    },
+  },
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+};
+
+// Required exports for App Router
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };

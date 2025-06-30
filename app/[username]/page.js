@@ -13,7 +13,7 @@ const Username = ({ params }) => {
   }, [])
 
   const getData = async() =>{
-      let u = await fetchuser(session.user.name)
+      let u = await fetchuser(session.user?.name)
       setcurrentuser(u)
   }
 
@@ -21,15 +21,15 @@ const Username = ({ params }) => {
     <div>
       <div className="w-full mx-auto relative">
         <img
-          src={currentuser.coverpic}
-          className="object-cover w-full h-85"
+          src="/Bg.jpg"
+          className="w-full h-110"
           alt=""
         />
         <div className="absolute -bottom-16 right-[45.5%]">
           <img
-           src={currentuser.profilepic}
+           src="/pic.jpg"
             alt=""
-            className="h-33 w-33 rounded-2xl"
+            className="h-33 w-33 object-cover  rounded-2xl"
           />
         </div>
       </div>

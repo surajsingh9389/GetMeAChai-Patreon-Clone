@@ -11,16 +11,18 @@ export const fetchuser = async (username) =>{
     return user;
 }
 
-export const updateProfile = async (data, oldusername) =>{
+export const updateProfile = async (form, oldusername) =>{
     await connectDB()
-    let ndata = Object.fromEntries(data);
-
-    if(oldusername !== ndata.username){
-        let u = await User.findOne({username: ndata.username});
+    const { name, username, profilepic, coverpic } = form;
+    // const ndata = Object.fromEntries(data);
+    if(oldusername !== name){
+        const u = await User.findOne({username: name});
         if(u){
             return {error: "Username already exists!"}
         }
     }
 
-    await User.updateOne({email: ndata.email}, ndata)
+    await User.updateOne({email: form.email},
+       { $set: {name}},
+    )
 }
