@@ -6,7 +6,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 
 const Username = ({ params }) => {
   const [currentuser, setcurrentuser] = useState({})
-  const { data: session, update } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
      getData()

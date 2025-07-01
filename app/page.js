@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
-  const { data: session, update } = useSession();
+  const { data: session } = useSession();
 
   return (
     <div>

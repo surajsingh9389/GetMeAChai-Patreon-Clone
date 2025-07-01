@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { fetchuser, updateProfile } from "@/actions/useractions";
 
 const Dashboard = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [form, setForm] = useState({
     name: "",
@@ -44,6 +44,7 @@ const Dashboard = () => {
     await updateProfile(form, session.user.name);
     alert("Profile Updated");
   };
+
 
   return (
     <div className="container mx-auto w-[40vw] flex flex-col gap-2 py-6">

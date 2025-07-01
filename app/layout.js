@@ -1,8 +1,10 @@
+// app/layout.jsx or layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import SessionWrapper from "@/components/SessionWrapper";
+import RouteChangeLoader from "@/components/RouteChangeLoader"; // ✅ import here
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,10 +28,12 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionWrapper>
-        <Navbar />
-          <div className="text-white min-h-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]">
-            {children}
-          </div>
+          <Navbar />
+          <RouteChangeLoader>
+            <div className="text-white min-h-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]">
+              {children}
+            </div>
+          </RouteChangeLoader>
           <Footer />
         </SessionWrapper>
       </body>

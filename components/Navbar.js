@@ -5,12 +5,6 @@ import Link from 'next/link'
 
 const Navbar = () => {
   const { data: session } = useSession()
-  // if(session) {
-  //   return <>
-  //     Signed in as {session.user.email} <br/>
-  //     <button onClick={() => signOut()}>Sign out</button>
-  //   </>
-  // }
   return (
     <div className='bg-gray-900 text-white px-3 flex justify-between items-center'>
         <Link href={'/'} className='flex justify-center items-center gap-2 hover:bg-blue-950 px-2 py-1 rounded-xl max-h-full'>Get Me A Chai! <span className='pb-1'><img src="Tea.gif" width={30} alt="" /></span>
